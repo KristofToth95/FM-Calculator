@@ -14,10 +14,13 @@ function Button(props) {
 }
 
 function Screen(props) {
-  let output = props.value.join("").replace(/.{3}/g, "$&,");
+  let output = parseInt(props.output);
+  if (isNaN(output)) {
+    output = 0;
+  }
   return (
     <div className={props.className}>
-      <span>{output}</span>
+      <span>{output.toLocaleString("en-US")}</span>
     </div>
   );
 }
@@ -64,28 +67,55 @@ class Calculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numbers: Array(),
+      number: "",
+      container: "",
+      operation: null,
     };
   }
   handleInput(input) {
-    let value = this.state.numbers;
+    let value;
     switch (true) {
       case Number.isInteger(input):
-        value.push(input);
+        value = this.state.number + input;
         break;
       case input == "DEL":
-        value.pop();
+        value = this.state.number.slice(-1);
+        break;
+      case input == "RESET":
+        value = "";
+        this.setState({
+          container: null,
+          operation: null,
+        });
+        break;
+      case input == "+" || input == "-" || input == "*" || input == "/":
+        this.setState({
+          operation: input,
+          container: this.state.number,
+        });
+        value = null;
+        break;
+      case input == "=":
+        value = eval(
+          this.state.container + this.state.operation + this.state.number
+        );
+        value = String(value);
+        this.setState({
+          operation: null,
+          container: null,
+        });
         break;
     }
     this.setState({
-      numbers: value,
+      number: value,
     });
+    console.log(this.state.number, "+", this.state.container);
   }
   render() {
     return (
       <div className="calculator">
         <div className="toggle"></div>
-        <Screen className="screen" value={this.state.numbers} />
+        <Screen className="screen" output={this.state.number} />
         <Keypad className="keypad" input={(input) => this.handleInput(input)} />
       </div>
     );

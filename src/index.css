@@ -53,8 +53,12 @@ body {
   font-family: "League Spartan", sans-serif;
   box-shadow: 0px 5px hsl(28, 16%, 65%);
   cursor: pointer;
+  transition: ease-in-out;
 }
-
+.key:active {
+  transform: translateY(5px);
+  box-shadow: 0px 0px;
+}
 .key.blue {
   background-color: hsl(225, 21%, 49%);
   color: white;
