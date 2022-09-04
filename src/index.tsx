@@ -91,7 +91,7 @@ function Calculator() {
   };
 
   return (
-    <>
+    <div className="calculator">
       <Screen
         output={output}
         firstOp={joinArray(firstOperand)}
@@ -101,7 +101,7 @@ function Calculator() {
         onClickNum={(input) => handleNumInput(input)}
         onClickComm={(comm) => handleCommInput(comm)}
       />
-    </>
+    </div>
   );
 }
 
@@ -124,14 +124,22 @@ function Keypad(props: { onClickNum; onClickComm }) {
     props.onClickNum(button);
   };
   return (
-    <div>
+    <div className="keypad">
       <button onClick={() => click(1)}>1</button>
       <button onClick={() => click(2)}>2</button>
       <button onClick={() => click(3)}>3</button>
+      <button onClick={() => click(4)}>4</button>
+      <button onClick={() => click(5)}>5</button>
+      <button onClick={() => click(6)}>6</button>
+      <button onClick={() => click(7)}>7</button>
+      <button onClick={() => click(8)}>8</button>
+      <button onClick={() => click(9)}>9</button>
       <button onClick={() => props.onClickComm(".")}>.</button>
       <button onClick={() => props.onClickComm("DEL")}>DEL</button>
       <button onClick={() => props.onClickComm("+")}>+</button>
       <button onClick={() => props.onClickComm("-")}>-</button>
+      <button onClick={() => props.onClickComm("/")}>-</button>
+      <button onClick={() => props.onClickComm("*")}>-</button>
       <button onClick={() => props.onClickComm("=")}>=</button>
       <button onClick={() => props.onClickComm("RESET")}>RESET</button>
     </div>
