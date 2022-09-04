@@ -2,17 +2,17 @@ import React, { Fragment, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-var firstOperand: Array<number> = [];
-var secondOperand: Array<number> = [];
+var firstOperand: Array<string> = [];
+var secondOperand: Array<string> = [];
 var operation: String = "";
-var isFloat: false;
+var isFloat: boolean = false;
 
-function joinArray(arr: Array<number>) {
-  return parseFloat(arr.join("")) || 0;
+function joinArray(arr: Array<string>) {
+  return arr.join("") || "0";
 }
 
 function Calculator() {
-  const [output, setOutput] = useState(0);
+  const [output, setOutput] = useState<string>("0");
 
   const refreshOutput = () => {
     setOutput(joinArray(firstOperand));
@@ -23,8 +23,12 @@ function Calculator() {
       operation = "";
       firstOperand = [];
     }
-    if (isFloat && i === ".") {
-      return;
+    if (i === ".") {
+      if (isFloat) {
+        return;
+      } else {
+        isFloat = true;
+      }
     }
     firstOperand.push(i);
     refreshOutput();
@@ -37,6 +41,9 @@ function Calculator() {
           if (secondOperand.length > 0) {
             firstOperand = [];
           } else {
+            if (firstOperand.pop() == ".") {
+              isFloat = false;
+            }
             firstOperand.pop();
             refreshOutput();
           }
@@ -46,7 +53,7 @@ function Calculator() {
         firstOperand = [];
         secondOperand = [];
         operation = "";
-        setOutput(0);
+        setOutput("0");
         break;
       case comm === "+" || comm === "-" || comm === "*" || comm === "/":
         if (operation) {
@@ -61,12 +68,23 @@ function Calculator() {
       case comm === "=":
         setOutput(calculate());
         secondOperand = [calculate()];
+        break;
+      case comm === ".":
+        if (!isFloat) {
+          if (firstOperand.length == 0) {
+            firstOperand.push("0");
+            firstOperand.push(comm);
+          } else {
+            firstOperand.push(comm);
+          }
+          refreshOutput();
+        }
     }
   };
 
   const calculate = () => {
     return eval(
-      `${parseInt(secondOperand.join(""))} ${operation} ${parseInt(
+      `${parseFloat(secondOperand.join(""))} ${operation} ${parseFloat(
         firstOperand.join("")
       )}`
     );
@@ -87,17 +105,16 @@ function Calculator() {
   );
 }
 
-function Screen(props: { output: number; firstOp: number; secondOp: number }) {
-  // console.log(props.output);
+function Screen(props: { output: string; firstOp: string; secondOp: string }) {
   const arrayToString = () => {
-    return props.output.toLocaleString("en-US");
+    return parseFloat(props.output).toLocaleString("en-US");
   };
 
   return (
     <>
       <div>Első operandus: {props.firstOp}</div>
       <div>Második operandus: {props.secondOp}</div>
-      <div>Eredmeny:{arrayToString()}</div>)
+      <div>Eredmeny: {arrayToString()}</div>
     </>
   );
 }
@@ -111,7 +128,7 @@ function Keypad(props: { onClickNum; onClickComm }) {
       <button onClick={() => click(1)}>1</button>
       <button onClick={() => click(2)}>2</button>
       <button onClick={() => click(3)}>3</button>
-      <button onClick={() => click(".")}>.</button>
+      <button onClick={() => props.onClickComm(".")}>.</button>
       <button onClick={() => props.onClickComm("DEL")}>DEL</button>
       <button onClick={() => props.onClickComm("+")}>+</button>
       <button onClick={() => props.onClickComm("-")}>-</button>
