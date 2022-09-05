@@ -66,8 +66,10 @@ function Calculator() {
         operation = comm;
         break;
       case comm === "=":
-        setOutput(calculate());
-        secondOperand = [calculate()];
+        if (firstOperand && secondOperand) {
+          setOutput(calculate());
+          secondOperand = [calculate()];
+        }
         break;
       case comm === ".":
         if (!isFloat) {
@@ -111,11 +113,11 @@ function Screen(props: { output: string; firstOp: string; secondOp: string }) {
   };
 
   return (
-    <>
+    <div className="screen">
       <div>Első operandus: {props.firstOp}</div>
       <div>Második operandus: {props.secondOp}</div>
       <div>Eredmeny: {arrayToString()}</div>
-    </>
+    </div>
   );
 }
 
@@ -125,23 +127,33 @@ function Keypad(props: { onClickNum; onClickComm }) {
   };
   return (
     <div className="keypad">
-      <button onClick={() => click(1)}>1</button>
-      <button onClick={() => click(2)}>2</button>
-      <button onClick={() => click(3)}>3</button>
-      <button onClick={() => click(4)}>4</button>
-      <button onClick={() => click(5)}>5</button>
-      <button onClick={() => click(6)}>6</button>
       <button onClick={() => click(7)}>7</button>
       <button onClick={() => click(8)}>8</button>
       <button onClick={() => click(9)}>9</button>
-      <button onClick={() => props.onClickComm(".")}>.</button>
-      <button onClick={() => props.onClickComm("DEL")}>DEL</button>
+      <button className="blueKey" onClick={() => props.onClickComm("DEL")}>
+        DEL
+      </button>
+      <button onClick={() => click(4)}>4</button>
+      <button onClick={() => click(5)}>5</button>
+      <button onClick={() => click(6)}>6</button>
       <button onClick={() => props.onClickComm("+")}>+</button>
+      <button onClick={() => click(1)}>1</button>
+      <button onClick={() => click(2)}>2</button>
+      <button onClick={() => click(3)}>3</button>
       <button onClick={() => props.onClickComm("-")}>-</button>
-      <button onClick={() => props.onClickComm("/")}>-</button>
-      <button onClick={() => props.onClickComm("*")}>-</button>
-      <button onClick={() => props.onClickComm("=")}>=</button>
-      <button onClick={() => props.onClickComm("RESET")}>RESET</button>
+      <button onClick={() => props.onClickComm(".")}>.</button>
+      <button onClick={() => click(0)}>0</button>
+      <button onClick={() => props.onClickComm("/")}>/</button>
+      <button onClick={() => props.onClickComm("*")}>x</button>
+      <button
+        className="blueKey longKey"
+        onClick={() => props.onClickComm("RESET")}
+      >
+        RESET
+      </button>
+      <button className="redKey longKey" onClick={() => props.onClickComm("=")}>
+        =
+      </button>
     </div>
   );
 }
