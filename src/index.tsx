@@ -96,8 +96,6 @@ function Calculator() {
     <div className="calculator">
       <Screen
         output={output}
-        firstOp={joinArray(firstOperand)}
-        secondOp={joinArray(secondOperand)}
       />
       <Keypad
         onClickNum={(input) => handleNumInput(input)}
@@ -107,16 +105,14 @@ function Calculator() {
   );
 }
 
-function Screen(props: { output: string; firstOp: string; secondOp: string }) {
+function Screen(props: { output: string; }) {
   const arrayToString = () => {
     return parseFloat(props.output).toLocaleString("en-US");
   };
 
   return (
     <div className="screen">
-      <div>Első operandus: {props.firstOp}</div>
-      <div>Második operandus: {props.secondOp}</div>
-      <div>Eredmeny: {arrayToString()}</div>
+      <div>{arrayToString()}</div>
     </div>
   );
 }
