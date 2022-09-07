@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
@@ -44,7 +44,6 @@ function Calculator() {
             if (firstOperand.pop() == ".") {
               isFloat = false;
             }
-            firstOperand.pop();
             refreshOutput();
           }
         }
@@ -94,9 +93,8 @@ function Calculator() {
 
   return (
     <div className="calculator">
-      <Screen
-        output={output}
-      />
+      <ThemeSlider />
+      <Screen output={output} />
       <Keypad
         onClickNum={(input) => handleNumInput(input)}
         onClickComm={(comm) => handleCommInput(comm)}
@@ -105,7 +103,7 @@ function Calculator() {
   );
 }
 
-function Screen(props: { output: string; }) {
+function Screen(props: { output: string }) {
   const arrayToString = () => {
     return parseFloat(props.output).toLocaleString("en-US");
   };
@@ -113,6 +111,67 @@ function Screen(props: { output: string; }) {
   return (
     <div className="screen">
       <div>{arrayToString()}</div>
+    </div>
+  );
+}
+
+function ThemeSlider() {
+  const [toggle, setToggle] = useState([
+    { opacity: 1 },
+    { opacity: 0 },
+    { opacity: 0 },
+  ]);
+
+  const toggleEvent = (num: number) => {
+    let temp = [...toggle];
+    temp[num] = { opacity: 1 };
+    temp.forEach((el, i) => {
+      if (i != num) {
+        temp[i] = { opacity: 0 };
+      }
+    });
+    setToggle(temp);
+  };
+
+  return (
+    <div className="container">
+      <span className="app_label">calc</span>
+      <div className="toggle">
+        <span className="toggle_label">THEME</span>
+        <div className="toggle_button">
+          <div className="labels">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+          </div>
+          <div className="buttons">
+            <input
+              type="radio"
+              className="button"
+              style={toggle[0]}
+              onClick={() => toggleEvent(0)}
+              name="toggle"
+              id="one"
+            />
+            <input
+              type="radio"
+              className="button"
+              name="toggle"
+              style={toggle[1]}
+              onClick={() => toggleEvent(1)}
+              id="two"
+            />
+            <input
+              type="radio"
+              className="button"
+              name="toggle"
+              style={toggle[2]}
+              onClick={() => toggleEvent(2)}
+              id="three"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
