@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
@@ -11,14 +11,41 @@ function joinArray(arr: Array<string>) {
   return arr.join("") || "0";
 }
 
+export const ThemeContext = createContext({
+  theme: "first",
+  switchTheme: (type: any) => {},
+});
+
 function Calculator() {
   const [output, setOutput] = useState<string>("0");
+  const [theme, setTheme] = useState("first");
 
   const refreshOutput = () => {
     setOutput(joinArray(firstOperand));
   };
 
+  const switchTheme = (themeType) => {
+    setTheme(themeType);
+    switch (true) {
+      case themeType === "":
+        console.log(document.querySelector("#root")?.getAttribute("class"));
+        document.querySelector("#root")?.setAttribute("class", "");
+        document.querySelector("#root")?.classList.add("first");
+        console.log(document.querySelector("#root")?.getAttribute("class"));
+        break;
+      case themeType === "second":
+        document.querySelector("#root")?.removeAttribute("class");
+        document.querySelector("#root")?.classList.add("second");
+        break;
+      case theme === "third":
+        document.querySelector("#root")?.removeAttribute("class");
+        document.querySelector("#root")?.classList.add("third");
+        break;
+    }
+  };
+
   const handleNumInput = (i) => {
+    console.log(theme);
     if (operation === "=") {
       operation = "";
       firstOperand = [];
@@ -93,29 +120,35 @@ function Calculator() {
 
   return (
     <div className="calculator">
-      <ThemeSlider />
-      <Screen output={output} />
-      <Keypad
-        onClickNum={(input) => handleNumInput(input)}
-        onClickComm={(comm) => handleCommInput(comm)}
-      />
+      <ThemeContext.Provider value={{ theme: theme, switchTheme: switchTheme }}>
+        <ThemeSlider />
+        <Screen output={output} />
+        <Keypad
+          onClickNum={(input) => handleNumInput(input)}
+          onClickComm={(comm) => handleCommInput(comm)}
+        />
+      </ThemeContext.Provider>
     </div>
   );
 }
 
 function Screen(props: { output: string }) {
+  const theme = useContext(ThemeContext);
+
   const arrayToString = () => {
     return parseFloat(props.output).toLocaleString("en-US");
   };
 
   return (
-    <div className="screen">
-      <div>{arrayToString()}</div>
+    <div className={`screen ${theme.theme}`}>
+      <div className={theme.theme}>{arrayToString()}</div>
     </div>
   );
 }
 
 function ThemeSlider() {
+  const theme = useContext(ThemeContext);
+
   const [toggle, setToggle] = useState([
     { opacity: 1 },
     { opacity: 0 },
@@ -125,6 +158,14 @@ function ThemeSlider() {
   const toggleEvent = (num: number) => {
     let temp = [...toggle];
     temp[num] = { opacity: 1 };
+    switch (true) {
+      case num === 0:
+        theme.switchTheme("");
+        break;
+      case num === 1:
+        theme.switchTheme("second");
+        break;
+    }
     temp.forEach((el, i) => {
       if (i != num) {
         temp[i] = { opacity: 0 };
@@ -135,16 +176,16 @@ function ThemeSlider() {
 
   return (
     <div className="container">
-      <span className="app_label">calc</span>
+      <span className={`app_label ${theme.theme}`}>calc</span>
       <div className="toggle">
-        <span className="toggle_label">THEME</span>
+        <span className={`toggle_label ${theme.theme}`}>THEME</span>
         <div className="toggle_button">
           <div className="labels">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
+            <span className={theme.theme}>1</span>
+            <span className={theme.theme}>2</span>
+            <span className={theme.theme}>3</span>
           </div>
-          <div className="buttons">
+          <div className={`buttons ${theme.theme}`}>
             <input
               type="radio"
               className="button"
@@ -177,36 +218,70 @@ function ThemeSlider() {
 }
 
 function Keypad(props: { onClickNum; onClickComm }) {
+  const theme = useContext(ThemeContext);
   const click = (button) => {
     props.onClickNum(button);
   };
   return (
-    <div className="keypad">
-      <button onClick={() => click(7)}>7</button>
-      <button onClick={() => click(8)}>8</button>
-      <button onClick={() => click(9)}>9</button>
-      <button className="blueKey" onClick={() => props.onClickComm("DEL")}>
+    <div className={`keypad ${theme.theme}`}>
+      <button className={theme.theme} onClick={() => click(7)}>
+        7
+      </button>
+      <button className={theme.theme} onClick={() => click(8)}>
+        8
+      </button>
+      <button className={theme.theme} onClick={() => click(9)}>
+        9
+      </button>
+      <button className={theme.theme} onClick={() => props.onClickComm("DEL")}>
         DEL
       </button>
-      <button onClick={() => click(4)}>4</button>
-      <button onClick={() => click(5)}>5</button>
-      <button onClick={() => click(6)}>6</button>
-      <button onClick={() => props.onClickComm("+")}>+</button>
-      <button onClick={() => click(1)}>1</button>
-      <button onClick={() => click(2)}>2</button>
-      <button onClick={() => click(3)}>3</button>
-      <button onClick={() => props.onClickComm("-")}>-</button>
-      <button onClick={() => props.onClickComm(".")}>.</button>
-      <button onClick={() => click(0)}>0</button>
-      <button onClick={() => props.onClickComm("/")}>/</button>
-      <button onClick={() => props.onClickComm("*")}>x</button>
+      <button className={theme.theme} onClick={() => click(4)}>
+        4
+      </button>
+      <button className={theme.theme} onClick={() => click(5)}>
+        5
+      </button>
+      <button className={theme.theme} onClick={() => click(6)}>
+        6
+      </button>
+      <button className={theme.theme} onClick={() => props.onClickComm("+")}>
+        +
+      </button>
+      <button className={theme.theme} onClick={() => click(1)}>
+        1
+      </button>
+      <button className={theme.theme} onClick={() => click(2)}>
+        2
+      </button>
+      <button className={theme.theme} onClick={() => click(3)}>
+        3
+      </button>
+      <button className={theme.theme} onClick={() => props.onClickComm("-")}>
+        -
+      </button>
+      <button className={theme.theme} onClick={() => props.onClickComm(".")}>
+        .
+      </button>
+      <button className={theme.theme} onClick={() => click(0)}>
+        0
+      </button>
+      <button className={theme.theme} onClick={() => props.onClickComm("/")}>
+        /
+      </button>
+      <button className={theme.theme} onClick={() => props.onClickComm("*")}>
+        x
+      </button>
       <button
-        className="blueKey longKey"
+        className={`blueKey longKey ${theme.theme}`}
         onClick={() => props.onClickComm("RESET")}
       >
         RESET
       </button>
-      <button className="redKey longKey" onClick={() => props.onClickComm("=")}>
+      <button
+        className={`redKey longKey ${theme.theme}`}
+        onClick={() => props.onClickComm("=")}
+      >
         =
       </button>
     </div>

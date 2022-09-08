@@ -11,12 +11,20 @@ body {
   font-family: "League Spartan", sans-serif;
 }
 #root {
-  background-color: hsl(222, 26%, 31%);
   display: flex;
   min-height: 100%;
   justify-content: center;
   align-items: center;
 }
+
+#root.first {
+  background-color: hsl(222, 26%, 31%);
+}
+
+#root.second {
+  background-color: hsl(0, 0%, 90%);
+}
+
 .calculator {
   flex-grow: 0;
   flex-shrink: 0;
@@ -35,6 +43,11 @@ body {
   display: grid;
   grid-template-columns: 25% [first] 25% [second] 25% [third] 25% [fourth];
 }
+
+.keypad.second {
+  background-color: hsl(0, 5%, 81%);
+}
+
 .keypad button {
   background-color: hsl(30, 25%, 89%);
   color: hsl(221, 14%, 31%);
@@ -48,6 +61,12 @@ body {
   cursor: pointer;
 }
 
+.keypad button.second {
+  background-color: hsl(45, 7%, 89%);
+  color: hsl(60, 10%, 19%);
+  box-shadow: 0px 5px hsl(35, 11%, 61%);
+}
+
 button:active {
   transform: translateY(5px);
   box-shadow: none;
@@ -57,7 +76,14 @@ button:active {
   background-color: hsl(225, 21%, 49%);
   box-shadow: 0px 5px hsl(224, 28%, 35%);
   color: white;
-  font-size: 1.5em;
+  font-size: 32px !important;
+}
+
+.keypad .blueKey.second {
+  background-color: hsl(185, 42%, 37%);
+  box-shadow: 0px 5px hsl(185, 58%, 25%);
+  color: white;
+  font-size: 32px !important;
 }
 
 .blueKey.longKey {
@@ -73,6 +99,12 @@ button:active {
   box-shadow: 0px 5px hsl(6, 70%, 34%);
 }
 
+.redKey.longKey.second {
+  background-color: hsl(25, 98%, 40%);
+  box-shadow: 0px 5px hsl(25, 99%, 27%);
+  color: white;
+}
+
 .screen {
   background-color: hsl(224, 36%, 15%);
   height: 10vh;
@@ -82,9 +114,19 @@ button:active {
   justify-content: end;
   align-items: center;
 }
+
+.screen.second {
+  background-color: hsl(0, 0%, 93%);
+}
+
 .screen > div {
   padding: 10px 25px 0px 0px;
+  color: hsl(0, 0, 100%);
   font-size: 4em;
+}
+
+.screen > div.second {
+  color: hsl(198, 20%, 13%);
 }
 
 input {
@@ -95,6 +137,10 @@ input {
   background-color: hsl(6, 63%, 50%);
   border-radius: 50%;
   opacity: 0;
+}
+
+input.second {
+  background-color: hsl(25, 98%, 40%);
 }
 
 input:hover {
@@ -118,11 +164,19 @@ input:hover {
   font-size: 0.6em;
 }
 
+.toggle_label.second {
+  color: hsl(198, 20%, 13%);
+}
+
 .app_label {
   color: white;
   font-size: 2em;
   display: inline-flex;
   align-items: center;
+}
+
+.app_label.second {
+  color: hsl(198, 20%, 13%);
 }
 
 .toggle_button {
@@ -141,8 +195,16 @@ input:hover {
   margin: 7px;
 }
 
+.labels > span.second {
+  color: hsl(198, 20%, 13%);
+}
+
 .buttons {
   height: fit-content;
   background-color: hsl(223, 31%, 20%);
   border-radius: 50px;
+}
+
+.buttons.second {
+  background-color: hsl(0, 5%, 81%);
 }
