@@ -28,17 +28,15 @@ function Calculator() {
     setTheme(themeType);
     switch (true) {
       case themeType === "":
-        console.log(document.querySelector("#root")?.getAttribute("class"));
         document.querySelector("#root")?.setAttribute("class", "");
         document.querySelector("#root")?.classList.add("first");
-        console.log(document.querySelector("#root")?.getAttribute("class"));
         break;
       case themeType === "second":
-        document.querySelector("#root")?.removeAttribute("class");
+        document.querySelector("#root")?.setAttribute("class", "");
         document.querySelector("#root")?.classList.add("second");
         break;
-      case theme === "third":
-        document.querySelector("#root")?.removeAttribute("class");
+      case themeType === "third":
+        document.querySelector("#root")?.setAttribute("class", "");
         document.querySelector("#root")?.classList.add("third");
         break;
     }
@@ -165,6 +163,9 @@ function ThemeSlider() {
       case num === 1:
         theme.switchTheme("second");
         break;
+      case num === 2:
+        theme.switchTheme("third");
+        break;
     }
     temp.forEach((el, i) => {
       if (i != num) {
@@ -222,6 +223,9 @@ function Keypad(props: { onClickNum; onClickComm }) {
   const click = (button) => {
     props.onClickNum(button);
   };
+
+  console.log(`blueKey longKey ${theme.theme}`);
+
   return (
     <div className={`keypad ${theme.theme}`}>
       <button className={theme.theme} onClick={() => click(7)}>
@@ -233,7 +237,10 @@ function Keypad(props: { onClickNum; onClickComm }) {
       <button className={theme.theme} onClick={() => click(9)}>
         9
       </button>
-      <button className={theme.theme} onClick={() => props.onClickComm("DEL")}>
+      <button
+        className={`blueKey ${theme.theme}`}
+        onClick={() => props.onClickComm("DEL")}
+      >
         DEL
       </button>
       <button className={theme.theme} onClick={() => click(4)}>
