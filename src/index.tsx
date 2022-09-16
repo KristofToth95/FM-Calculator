@@ -189,7 +189,7 @@ function ThemeSlider() {
           <div className={`buttons ${theme.theme}`}>
             <input
               type="radio"
-              className="button"
+              className={`switch ${theme.theme}`}
               style={toggle[0]}
               onClick={() => toggleEvent(0)}
               name="toggle"
@@ -197,7 +197,7 @@ function ThemeSlider() {
             />
             <input
               type="radio"
-              className="button"
+              className={`switch ${theme.theme}`}
               name="toggle"
               style={toggle[1]}
               onClick={() => toggleEvent(1)}
@@ -205,7 +205,7 @@ function ThemeSlider() {
             />
             <input
               type="radio"
-              className="button"
+              className={`switch ${theme.theme}`}
               name="toggle"
               style={toggle[2]}
               onClick={() => toggleEvent(2)}

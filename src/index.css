@@ -31,7 +31,7 @@ body {
 .calculator {
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: 25%;
+  flex-basis: 28%;
   height: 50%;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@ body {
 
 .keypad {
   padding: 15px;
-  height: 40vh;
+  height: 43vh;
   background-color: hsl(223, 31%, 20%);
   border-radius: 15px;
   display: grid;
@@ -61,8 +61,8 @@ body {
   border: none;
   margin: 12px;
   border-radius: 10px;
-  font-size: 2.3em;
-  font-weight: bolder;
+  font-size: 32px;
+  font-weight: 700;
   box-shadow: 0px 5px hsl(28, 16%, 65%);
   transition: ease-in-out 0.05s;
   cursor: pointer;
@@ -86,23 +86,23 @@ button:active {
 }
 
 .blueKey {
-  background-color: hsl(225, 21%, 49%);
-  box-shadow: 0px 5px hsl(224, 28%, 35%);
-  color: white;
-  font-size: 32px !important;
+  background-color: hsl(225, 21%, 49%) !important;
+  box-shadow: 0px 5px hsl(224, 28%, 35%) !important;
+  color: white !important;
+  font-size: 20px !important;
 }
 
 .blueKey.second {
-  background-color: hsl(185, 42%, 37%);
-  box-shadow: 0px 5px hsl(185, 58%, 25%);
+  background-color: hsl(185, 42%, 37%) !important;
+  box-shadow: 0px 5px hsl(185, 58%, 25%) !important;
   color: white;
-  font-size: 32px !important;
+  font-size: 20px !important;
 }
 .blueKey.third {
-  background-color: hsl(281, 89%, 26%);
-  box-shadow: 0px 5px hsl(177, 92%, 70%);
+  background-color: hsl(281, 89%, 26%) !important;
+  box-shadow: 0px 5px hsl(290, 70%, 36%) !important;
   color: white;
-  font-size: 32px !important;
+  font-size: 20px !important;
 }
 
 .blueKey.longKey {
@@ -171,11 +171,11 @@ input {
 }
 
 input.second {
-  background-color: hsl(25, 98%, 40%);
+  background-color: hsl(25, 98%, 40%) !important;
 }
 
 input.third {
-  background-color: hsl(268, 71%, 12%);
+  background-color: hsl(176, 100%, 44%) !important;
 }
 
 input:hover {
@@ -255,5 +255,5 @@ input:hover {
   background-color: hsl(0, 5%, 81%);
 }
 .buttons.third {
-  background-color: hsl(176, 100%, 44%);
+  background-color: hsl(268, 71%, 12%);
 }
