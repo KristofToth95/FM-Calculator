@@ -40,7 +40,7 @@ body {
 }
 .keypad {
   padding: 15px;
-  height: 43vh;
+  height: 400px;
   background-color: hsl(223, 31%, 20%);
   border-radius: 15px;
   display: grid;
@@ -60,6 +60,7 @@ body {
   color: hsl(221, 14%, 31%);
   border: none;
   margin: 12px;
+  min-width: 60px;
   border-radius: 10px;
   font-size: 32px;
   font-weight: 700;
