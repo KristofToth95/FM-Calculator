@@ -1,6 +1,6 @@
 ![Design preview for the Calculator app coding challenge](./design/desktop-preview.jpg)
 
-<h1 align="center">Interactive Rating Component Challenge</h1>
+<h1 align="center">Calculator app Challenge</h1>
 
 <div align="center">
     <h3>
@@ -34,4 +34,3 @@ Your users should be able to:
 ## What I learned
 
 This was my first ever project using ReactJS, so my main goal was to understand the library and get familiar with it. I think I got used to the main principles during development, so the project achieved its goal. On the other hand I'm not too accustomed to building responsive apps yet, so I've increased my knowledge in that area too.
-
