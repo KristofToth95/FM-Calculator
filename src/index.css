@@ -10,6 +10,7 @@ body {
   margin: 0%;
   font-family: "League Spartan", sans-serif;
 }
+
 #root {
   display: flex;
   min-height: 100%;
@@ -37,7 +38,6 @@ body {
   flex-direction: column;
   gap: 20px;
 }
-
 .keypad {
   padding: 15px;
   height: 43vh;
@@ -256,4 +256,33 @@ input:hover {
 }
 .buttons.third {
   background-color: hsl(268, 71%, 12%);
+}
+
+@media screen and (max-width: 375px) {
+  #root {
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+  }
+  .calculator {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 90%;
+    height: 600px;
+  }
+
+  .keypad {
+    padding: 10px;
+    height: 500px;
+  }
+
+  .keypad button {
+    margin: 8px;
+  }
+
+  .screen {
+    height: 80px;
+  }
 }
